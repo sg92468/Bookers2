@@ -19,20 +19,20 @@
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="navbar-collapse collapse show" id="navbarNavDropdown">
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ml-auto">
             <% if user_signed_in? %>
             <li class="nav-item">
               <%= link_to "Home", user_path(current_user.id), class: 'fas fa-home nav-link text-light' %>
             </li>
             <li>
-              <%= link_to 'Users', user_path, class: 'nav-link text-dark' %>
+              <%= link_to 'Users', users_path, class: 'nav-link text-light' %>
             </li>
             <li>
-              <%= link_to 'Books', book_path, class: 'nav-link text-dark' %>
+              <%= link_to 'Books', books_path, class: 'nav-link text-light' %>
             </li>
             <li>
-              <%= link_to "logout", destroy_user_session_path, method: :delete, class: 'nav-link text-dark' %>
+              <%= link_to "logout", destroy_user_session_path, method: :delete, class: 'nav-link text-light' %>
             </li>
             <% else %>
             <li>
