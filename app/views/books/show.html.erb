@@ -9,19 +9,19 @@
         <tr>
           <td>
             <%= attachment_image_tag @bookid.user, :profile_image, :fill, 60, 60, fallback: "no_image.jpg" %><br>
-            <%= link_to '@user.name', user_path(user) %>
+            <%= link_to @user.name, user_path(@bookid.user) %>
           </td>
           <td>
-            <%= link_to '@bookid.title', book_path(book.id) %>
+            <%= link_to @bookid.title, book_path(@bookid) %>
           </td>
           <td>
             <%= @bookid.body %>
           </td>
           <td>
-            <%= link_to "Edit", edit_book_path(book.id), class:"btn btn-sm btn-success" %>
+            <%= link_to "Edit", edit_book_path(@bookid), class:"btn btn-sm btn-success" %>
           </td>
           <td>
-            <%= link_to "Destroy", book_path(book.id), method: :delete, data: { confirm: '本当に消しますか?' } %>
+            <%= link_to "Destroy", book_path(@bookid), method: :delete, class="btn btn-sm btn-danger",data: { confirm: '本当に消しますか?' } %>
           </td>
         </tr>
       </tbody>

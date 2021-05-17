@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   
   def index
-    @user = User.find(params[:id])
+    @user = User.find(current_user.id)
     @book = Book.new
     @users = User.page(params[:page]).reverse_order
     
@@ -15,6 +15,7 @@ class UsersController < ApplicationController
   end
   
   def edit
+    @user = User.find(params[:id])
   end
   
   def update
