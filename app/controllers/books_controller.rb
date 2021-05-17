@@ -1,8 +1,8 @@
 class BooksController < ApplicationController
   def index
-    @user = User.find(params[:id])
     @book = Book.new
-    @books = Book.all
+    @user = current_user
+    @books = Book.page(params[:page]).reverse_order
   end
   
   def create
@@ -21,10 +21,24 @@ class BooksController < ApplicationController
     @user = @bookid.user
   end
   
+  def edit
+    @book = Book.find(params[:id])
+  end
+  
   def update
+    @book = Book.find(params[:id])
+    if @book.update(book_params)
+      flash[:notice] = 'Book have updated book successfully.'
+      redirect_to book_path(@book.id)
+    else
+      render :edit
+    end
   end
   
   def destroy
+    @book = Book.find(params[:id])
+    @book.destroy
+    redirect_to books_path
   end
   
   private
