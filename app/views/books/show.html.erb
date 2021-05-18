@@ -18,10 +18,14 @@
             <%= @bookid.body %>
           </td>
           <td>
+            <% if @bookid.user == current_user %>
             <%= link_to "Edit", edit_book_path(@bookid), class:"btn btn-sm btn-success" %>
+            <% end %>
           </td>
           <td>
+            <% if @bookid.user == current_user %>
             <%= link_to "Destroy", book_path(@bookid), method: :delete, class:"btn btn-sm btn-danger", data: { confirm: '本当に消しますか?' } %>
+            <% 
           </td>
         </tr>
       </tbody>
