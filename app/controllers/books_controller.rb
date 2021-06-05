@@ -1,27 +1,27 @@
 class BooksController < ApplicationController
   def index
-    @book = Book.new
+    @book_new = Book.new
     @user = current_user
-    @books = Book.page(params[:page]).reverse_order
+    @book = Book.page(params[:page]).reverse_order
   end
   
   def create
-    @book = Book.new(book_params)
-    @book.user_id = current_user.id
-    if @book.save
+    @book_new = Book.new(book_params)
+    @book_new.user_id = current_user.id
+    if @book_new.save
       flash[:notice] = "You have created book successfully"
-      redirect_to book_path(@book.id)
+      redirect_to book_path(@book_new.id)
     else
       @user = current_user
-      @books = Book.page(params[:page]).reverse_order
+      @book = Book.page(params[:page]).reverse_order
       render :index
     end
   end
   
   def show
-    @book = Book.new
-    @bookid = Book.find(params[:id])
-    @user = @bookid.user
+    @book_new = Book.new
+    @book = Book.find(params[:id])
+    @user = @book.user
     @comment = Comment.new
   end
   
