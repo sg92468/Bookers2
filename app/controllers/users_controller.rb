@@ -11,6 +11,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @book = Book.new
     @books = @user.books.page(params[:page]).reverse_order
+    @day_quotient = @books.created_today.count / @books.created_yesterday.count rescue 0
+    @count_2_week = @books.created_2_week_sum.count - @books.created_1_week.count
+    @count_1_week = @books.created_1_week.count
+    @week_quotient = @count_1_week / @count_2_week rescue 0
   end
   
   def edit

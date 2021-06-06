@@ -29,7 +29,90 @@
           <%= paginate @books %>
         </tbody>
       </table>
+      <h2>投稿数の前日比・前週比</h2>
+      <table border="1" width="600" height="100" cellpadding="10">
+        <tr>
+          <th>今日の投稿数</th>
+          <th>前日の投稿数</th>
+          <th>前日比</th>
+        </tr>
+        <tr>
+          <td><%= @books.created_today.count %></td>
+          <td><%= @books.created_yesterday.count %></td>
+          <td><%= number_to_percentage(@day_quotient) %></td>
+        </tr>
+      </table>
+      <table border="1" width="600" height="100" cellpadding="10" class="my-2">
+        <tr>
+          <th>今週の投稿数</th>
+          <th>前週の投稿数</th>
+          <th>前週比</th>
+        </tr>
+        <tr>
+          <td><%= @count_1_week %></td>
+          <td><%= @count_2_week %></td>
+          <td><%= number_to_percentage(@week_quotient) %></td>
+        </tr>
+      </table>
+      <h2>7日間分の投稿数</h2>
+      <table border="1" width="600" height="100" cellpadding="10">
+        <tr>
+          <th>6日前</th>
+          <th>5日前</th>
+          <th>4日前</th>
+          <th>3日前</th>
+          <th>2日前</th>
+          <th>1日前</th>
+          <th>今日</th>
+        </tr>
+        <tr>
+          <td><%= @books.created_6_day_ago.count %></td>
+          <td><%= @books.created_5_day_ago.count %></td>
+          <td><%= @books.created_4_day_ago.count %></td>
+          <td><%= @books.created_3_day_ago.count %></td>
+          <td><%= @books.created_2_day_ago.count %></td>
+          <td><%= @books.created_yesterday.count %></td>
+          <td><%= @books.created_today.count %></td>
+        </tr>
+      </table>
+      <%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js' %>
+      <canvas id="myChart" width="300" height="200"></canvas>
+      
     </div>
     
   </div>
 </div>
+
+<script>
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ["6日前", "5日前", "4日前", "3日前", "2日前", "1日前", "今日"],
+        datasets: [{
+            label: '投稿した本の数',
+            data: [
+              "<%= @books.created_6_day_ago.count %>",
+              "<%= @books.created_5_day_ago.count %>",
+              "<%= @books.created_4_day_ago.count %>",
+              "<%= @books.created_3_day_ago.count %>",
+              "<%= @books.created_2_day_ago.count %>",
+              "<%= @books.created_yesterday.count %>",
+              "<%= @books.created_today.count %>"
+              ],
+            backgroundColor: 'rgba(0, 0, 0, 0)',
+            borderWidth: 3,
+            borderColor: 'rgba(0, 0, 255, 255)'
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+</script>
