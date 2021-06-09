@@ -78,6 +78,21 @@
       <%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js' %>
       <canvas id="myChart" width="300" height="200"></canvas>
       
+      <%= form_with(scope: :search, url: user_path(@user), method: :get, remote: true) do |f| %>
+        <%= f.date_field :date, value: @search_params[:date] %>
+        <%= f.submit :"検索" %>
+      <% end %>
+      <h2>検索結果</h2>
+      <table border="1" width="600" height="100" cellpadding="10">
+        <tr>
+          <th>投稿数</th>
+        </tr>
+        <tr>
+          <td id="search_books_count">
+            <%= render "users/search", search_books: @search_books %>
+            </td>
+        </tr>
+      </table>
     </div>
     
   </div>

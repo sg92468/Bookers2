@@ -15,7 +15,13 @@ class UsersController < ApplicationController
     @count_2_week = @books.created_2_week_sum.count - @books.created_1_week.count
     @count_1_week = @books.created_1_week.count
     @week_quotient = @count_1_week / @count_2_week rescue 0
+    @search_params = book_search_params
+    if @search_params[:date] != nil
+      @search_books = @books.search(@search_params)
+    end
+    
   end
+  
   
   def edit
     @user = User.find(params[:id])
@@ -53,6 +59,10 @@ class UsersController < ApplicationController
   
   def user_params
     params.require(:user).permit(:name, :profile_image, :introduction)
+  end
+  
+  def book_search_params
+    params.fetch(:search, {}).permit(:date)
   end
   
 end

@@ -1,0 +1,5 @@
+<% if @search_params[:date] == nil %>
+  0
+<% else %>
+  <%= @search_books.count %>
+<% end %>

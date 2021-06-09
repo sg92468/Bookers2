@@ -15,6 +15,13 @@ class Book < ApplicationRecord
   scope :created_1_week, -> { where("created_at >= ?", 6.days.ago.in_time_zone("Tokyo").beginning_of_day) }
   scope :created_2_week_sum, -> { where("created_at >= ?", 13.days.ago.in_time_zone("Tokyo").beginning_of_day) }
   
+  scope :search, -> (search_params) do
+    return if search_params.blank?
+    created_day_search(search_params[:date])
+  end
+  
+  scope :created_day_search, -> (date) { where(created_at: date.in_time_zone("Tokyo").all_day) if date.present? }
+  
   validates :title, presence: true
   validates :body, presence: true, length: { maximum: 200 }
   
